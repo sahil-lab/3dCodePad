@@ -4,9 +4,9 @@
     "description": "A beautiful 3D code editor with animated backgrounds and multi-language execution",
     "main": "index.js",
     "scripts": {
-        "start": "webpack serve --mode development --open",
-        "build": "webpack --mode production",
-        "dev": "webpack serve --mode development"
+        "start": "npx webpack serve --mode development --open",
+        "build": "npx webpack --mode production",
+        "dev": "npx webpack serve --mode development"
     },
     "keywords": [
         "react",
