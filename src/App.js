@@ -4544,8 +4544,9 @@ export default function App() {
     const [currentTheme, setCurrentTheme] = useState('emerald');
     const [selectedFont, setSelectedFont] = useState('jetbrains-mono');
 
-    // Nostalgic Color Themes for Serene Experience
+    // Ultimate Color Themes Collection - 30+ Stunning Themes
     const COLOR_THEMES = {
+        // Original Nostalgic Themes
         emerald: {
             name: "🌿 Emerald Garden",
             primary: "rgba(20, 120, 80, 0.3)",
@@ -4605,6 +4606,306 @@ export default function App() {
             border: "rgba(170, 190, 230, 0.3)",
             glow: "rgba(90, 110, 150, 0.2)",
             description: "Peaceful midnight moments"
+        },
+
+        // 🌈 NEON COLLECTION - Electric & Vibrant
+        neonCyan: {
+            name: "⚡ Neon Cyan",
+            primary: "rgba(0, 255, 255, 0.4)",
+            secondary: "rgba(0, 200, 255, 0.35)",
+            accent: "rgba(0, 150, 255, 0.4)",
+            highlight: "rgba(100, 255, 255, 0.5)",
+            border: "rgba(0, 255, 255, 0.6)",
+            glow: "rgba(0, 255, 255, 0.3)",
+            description: "Electric cyberpunk vibes"
+        },
+        neonPink: {
+            name: "💖 Neon Pink",
+            primary: "rgba(255, 0, 150, 0.4)",
+            secondary: "rgba(255, 50, 200, 0.35)",
+            accent: "rgba(255, 100, 255, 0.4)",
+            highlight: "rgba(255, 150, 255, 0.5)",
+            border: "rgba(255, 0, 150, 0.6)",
+            glow: "rgba(255, 0, 150, 0.3)",
+            description: "Hot pink energy"
+        },
+        neonGreen: {
+            name: "🔋 Neon Green",
+            primary: "rgba(0, 255, 0, 0.4)",
+            secondary: "rgba(50, 255, 100, 0.35)",
+            accent: "rgba(100, 255, 150, 0.4)",
+            highlight: "rgba(150, 255, 200, 0.5)",
+            border: "rgba(0, 255, 0, 0.6)",
+            glow: "rgba(0, 255, 0, 0.3)",
+            description: "Matrix green glow"
+        },
+        neonOrange: {
+            name: "🔥 Neon Orange",
+            primary: "rgba(255, 100, 0, 0.4)",
+            secondary: "rgba(255, 150, 50, 0.35)",
+            accent: "rgba(255, 200, 100, 0.4)",
+            highlight: "rgba(255, 220, 150, 0.5)",
+            border: "rgba(255, 100, 0, 0.6)",
+            glow: "rgba(255, 100, 0, 0.3)",
+            description: "Fiery neon burst"
+        },
+        neonPurple: {
+            name: "🌟 Neon Purple",
+            primary: "rgba(150, 0, 255, 0.4)",
+            secondary: "rgba(180, 50, 255, 0.35)",
+            accent: "rgba(200, 100, 255, 0.4)",
+            highlight: "rgba(220, 150, 255, 0.5)",
+            border: "rgba(150, 0, 255, 0.6)",
+            glow: "rgba(150, 0, 255, 0.3)",
+            description: "Electric violet dreams"
+        },
+        neonYellow: {
+            name: "⚡ Neon Yellow",
+            primary: "rgba(255, 255, 0, 0.4)",
+            secondary: "rgba(255, 255, 100, 0.35)",
+            accent: "rgba(255, 255, 150, 0.4)",
+            highlight: "rgba(255, 255, 200, 0.5)",
+            border: "rgba(255, 255, 0, 0.6)",
+            glow: "rgba(255, 255, 0, 0.3)",
+            description: "Lightning bright energy"
+        },
+
+        // 🌃 CYBERPUNK COLLECTION
+        cyberpunk: {
+            name: "🤖 Cyberpunk",
+            primary: "rgba(0, 255, 255, 0.3)",
+            secondary: "rgba(255, 0, 150, 0.25)",
+            accent: "rgba(150, 0, 255, 0.3)",
+            highlight: "rgba(100, 255, 255, 0.4)",
+            border: "rgba(0, 255, 255, 0.4)",
+            glow: "rgba(255, 0, 150, 0.2)",
+            description: "Future noir aesthetic"
+        },
+        synthwave: {
+            name: "🌆 Synthwave",
+            primary: "rgba(255, 0, 150, 0.3)",
+            secondary: "rgba(150, 0, 255, 0.25)",
+            accent: "rgba(0, 255, 255, 0.3)",
+            highlight: "rgba(255, 100, 200, 0.4)",
+            border: "rgba(255, 0, 150, 0.4)",
+            glow: "rgba(150, 0, 255, 0.2)",
+            description: "80s retro wave"
+        },
+        matrix: {
+            name: "💊 Matrix",
+            primary: "rgba(0, 255, 65, 0.3)",
+            secondary: "rgba(0, 200, 50, 0.25)",
+            accent: "rgba(0, 150, 35, 0.3)",
+            highlight: "rgba(100, 255, 150, 0.4)",
+            border: "rgba(0, 255, 65, 0.4)",
+            glow: "rgba(0, 255, 65, 0.2)",
+            description: "Digital rain code"
+        },
+
+        // 🌌 DARK THEMES
+        darkVoid: {
+            name: "🕳️ Dark Void",
+            primary: "rgba(30, 30, 35, 0.8)",
+            secondary: "rgba(45, 45, 50, 0.7)",
+            accent: "rgba(60, 60, 70, 0.8)",
+            highlight: "rgba(100, 100, 120, 0.6)",
+            border: "rgba(80, 80, 90, 0.5)",
+            glow: "rgba(120, 120, 140, 0.3)",
+            description: "Deep space darkness"
+        },
+        midnight: {
+            name: "🌃 Midnight Blue",
+            primary: "rgba(20, 30, 60, 0.8)",
+            secondary: "rgba(30, 45, 80, 0.7)",
+            accent: "rgba(40, 60, 100, 0.8)",
+            highlight: "rgba(80, 120, 180, 0.6)",
+            border: "rgba(60, 90, 140, 0.5)",
+            glow: "rgba(100, 150, 220, 0.3)",
+            description: "City lights at night"
+        },
+        obsidian: {
+            name: "🔮 Obsidian",
+            primary: "rgba(25, 25, 25, 0.8)",
+            secondary: "rgba(40, 40, 45, 0.7)",
+            accent: "rgba(55, 55, 65, 0.8)",
+            highlight: "rgba(100, 100, 120, 0.6)",
+            border: "rgba(80, 80, 100, 0.5)",
+            glow: "rgba(120, 120, 150, 0.3)",
+            description: "Volcanic glass"
+        },
+
+        // 🌈 VIBRANT THEMES
+        rainbow: {
+            name: "🌈 Rainbow",
+            primary: "rgba(255, 100, 150, 0.3)",
+            secondary: "rgba(100, 255, 150, 0.25)",
+            accent: "rgba(150, 100, 255, 0.3)",
+            highlight: "rgba(255, 200, 100, 0.4)",
+            border: "rgba(200, 150, 255, 0.4)",
+            glow: "rgba(255, 150, 200, 0.2)",
+            description: "Colorful spectrum"
+        },
+        tropical: {
+            name: "🏝️ Tropical",
+            primary: "rgba(0, 200, 150, 0.3)",
+            secondary: "rgba(255, 180, 0, 0.25)",
+            accent: "rgba(255, 100, 150, 0.3)",
+            highlight: "rgba(100, 255, 200, 0.4)",
+            border: "rgba(0, 200, 150, 0.4)",
+            glow: "rgba(255, 180, 0, 0.2)",
+            description: "Paradise vibes"
+        },
+        coral: {
+            name: "🪸 Coral Reef",
+            primary: "rgba(255, 127, 80, 0.3)",
+            secondary: "rgba(255, 160, 122, 0.25)",
+            accent: "rgba(255, 182, 193, 0.3)",
+            highlight: "rgba(255, 218, 185, 0.4)",
+            border: "rgba(255, 127, 80, 0.4)",
+            glow: "rgba(255, 160, 122, 0.2)",
+            description: "Underwater coral"
+        },
+
+        // ❄️ COOL THEMES
+        arctic: {
+            name: "🧊 Arctic",
+            primary: "rgba(176, 224, 230, 0.3)",
+            secondary: "rgba(173, 216, 230, 0.25)",
+            accent: "rgba(135, 206, 235, 0.3)",
+            highlight: "rgba(240, 248, 255, 0.4)",
+            border: "rgba(176, 224, 230, 0.4)",
+            glow: "rgba(173, 216, 230, 0.2)",
+            description: "Frozen tundra"
+        },
+        glacier: {
+            name: "🏔️ Glacier",
+            primary: "rgba(175, 238, 238, 0.3)",
+            secondary: "rgba(224, 255, 255, 0.25)",
+            accent: "rgba(176, 196, 222, 0.3)",
+            highlight: "rgba(230, 230, 250, 0.4)",
+            border: "rgba(175, 238, 238, 0.4)",
+            glow: "rgba(224, 255, 255, 0.2)",
+            description: "Ancient ice"
+        },
+
+        // 🔥 WARM THEMES
+        volcano: {
+            name: "🌋 Volcano",
+            primary: "rgba(255, 69, 0, 0.3)",
+            secondary: "rgba(255, 140, 0, 0.25)",
+            accent: "rgba(255, 165, 0, 0.3)",
+            highlight: "rgba(255, 215, 0, 0.4)",
+            border: "rgba(255, 69, 0, 0.4)",
+            glow: "rgba(255, 140, 0, 0.2)",
+            description: "Molten lava"
+        },
+        desert: {
+            name: "🏜️ Desert",
+            primary: "rgba(255, 218, 185, 0.3)",
+            secondary: "rgba(255, 222, 173, 0.25)",
+            accent: "rgba(255, 228, 181, 0.3)",
+            highlight: "rgba(255, 235, 205, 0.4)",
+            border: "rgba(255, 218, 185, 0.4)",
+            glow: "rgba(255, 222, 173, 0.2)",
+            description: "Sand dunes"
+        },
+
+        // 🌸 NATURE THEMES
+        sakura: {
+            name: "🌸 Sakura",
+            primary: "rgba(255, 182, 193, 0.3)",
+            secondary: "rgba(255, 192, 203, 0.25)",
+            accent: "rgba(255, 218, 185, 0.3)",
+            highlight: "rgba(255, 228, 225, 0.4)",
+            border: "rgba(255, 182, 193, 0.4)",
+            glow: "rgba(255, 192, 203, 0.2)",
+            description: "Cherry blossoms"
+        },
+        forest: {
+            name: "🌲 Forest",
+            primary: "rgba(34, 139, 34, 0.3)",
+            secondary: "rgba(50, 205, 50, 0.25)",
+            accent: "rgba(124, 252, 0, 0.3)",
+            highlight: "rgba(144, 238, 144, 0.4)",
+            border: "rgba(34, 139, 34, 0.4)",
+            glow: "rgba(50, 205, 50, 0.2)",
+            description: "Deep woods"
+        },
+
+        // 💎 LUXURY THEMES
+        gold: {
+            name: "👑 Gold",
+            primary: "rgba(255, 215, 0, 0.3)",
+            secondary: "rgba(255, 223, 0, 0.25)",
+            accent: "rgba(255, 235, 59, 0.3)",
+            highlight: "rgba(255, 245, 157, 0.4)",
+            border: "rgba(255, 215, 0, 0.4)",
+            glow: "rgba(255, 223, 0, 0.2)",
+            description: "Royal luxury"
+        },
+        silver: {
+            name: "🥈 Silver",
+            primary: "rgba(192, 192, 192, 0.3)",
+            secondary: "rgba(211, 211, 211, 0.25)",
+            accent: "rgba(220, 220, 220, 0.3)",
+            highlight: "rgba(245, 245, 245, 0.4)",
+            border: "rgba(192, 192, 192, 0.4)",
+            glow: "rgba(211, 211, 211, 0.2)",
+            description: "Metallic elegance"
+        },
+        diamond: {
+            name: "💎 Diamond",
+            primary: "rgba(185, 242, 255, 0.3)",
+            secondary: "rgba(224, 255, 255, 0.25)",
+            accent: "rgba(240, 248, 255, 0.3)",
+            highlight: "rgba(248, 248, 255, 0.4)",
+            border: "rgba(185, 242, 255, 0.4)",
+            glow: "rgba(224, 255, 255, 0.2)",
+            description: "Crystal brilliance"
+        },
+
+        // 🎨 ARTISTIC THEMES
+        pastel: {
+            name: "🎨 Pastel",
+            primary: "rgba(255, 182, 193, 0.3)",
+            secondary: "rgba(221, 160, 221, 0.25)",
+            accent: "rgba(176, 224, 230, 0.3)",
+            highlight: "rgba(255, 228, 225, 0.4)",
+            border: "rgba(255, 182, 193, 0.4)",
+            glow: "rgba(221, 160, 221, 0.2)",
+            description: "Soft artist colors"
+        },
+        vintage: {
+            name: "📷 Vintage",
+            primary: "rgba(160, 82, 45, 0.3)",
+            secondary: "rgba(210, 180, 140, 0.25)",
+            accent: "rgba(222, 184, 135, 0.3)",
+            highlight: "rgba(245, 222, 179, 0.4)",
+            border: "rgba(160, 82, 45, 0.4)",
+            glow: "rgba(210, 180, 140, 0.2)",
+            description: "Old photo sepia"
+        },
+
+        // ⚫ MINIMALIST THEMES
+        monochrome: {
+            name: "⚫ Monochrome",
+            primary: "rgba(64, 64, 64, 0.3)",
+            secondary: "rgba(96, 96, 96, 0.25)",
+            accent: "rgba(128, 128, 128, 0.3)",
+            highlight: "rgba(192, 192, 192, 0.4)",
+            border: "rgba(64, 64, 64, 0.4)",
+            glow: "rgba(96, 96, 96, 0.2)",
+            description: "Pure black & white"
+        },
+        minimal: {
+            name: "⚪ Minimal",
+            primary: "rgba(250, 250, 250, 0.3)",
+            secondary: "rgba(245, 245, 245, 0.25)",
+            accent: "rgba(240, 240, 240, 0.3)",
+            highlight: "rgba(255, 255, 255, 0.4)",
+            border: "rgba(230, 230, 230, 0.4)",
+            glow: "rgba(200, 200, 200, 0.2)",
+            description: "Clean simplicity"
         }
     };
 
