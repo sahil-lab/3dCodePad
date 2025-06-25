@@ -5089,9 +5089,20 @@ export default function App() {
         <div style={{
             minHeight: '100vh',
             background: `
-                radial-gradient(circle at 20% 20%, rgba(248,250,252,0.8) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(241,245,249,0.6) 0%, transparent 50%),
-                linear-gradient(135deg, #fefefe 0%, #fafafa 25%, #f8fafc 50%, #f1f5f9 75%, #fafafa 100%)
+                radial-gradient(circle at 20% 30%, rgba(16, 185, 129, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(20, 120, 80, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 40% 80%, rgba(34, 197, 94, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 60% 20%, rgba(5, 150, 105, 0.08) 0%, transparent 35%),
+                linear-gradient(135deg, 
+                    #f0fdf4 0%, 
+                    #dcfce7 15%,
+                    #bbf7d0 30%,
+                    #86efac 45%,
+                    #6ee7b7 60%,
+                    #34d399 75%,
+                    #10b981 90%,
+                    #059669 100%
+                )
             `,
             fontFamily: "'Inter', system-ui, sans-serif",
             position: 'relative',
