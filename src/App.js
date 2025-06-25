@@ -468,34 +468,6 @@ code, pre, kbd, samp, textarea, .monaco-editor, .emerald-terminal-text {
     transform: none !important;
 }
 
-/* PERFORMANCE OPTIMIZATION - DISABLE ALL ANIMATIONS FOR INSTANT TYPING */
-.code-glass-panel,
-.code-glass-panel *,
-.monaco-editor,
-.monaco-editor * {
-    animation: none !important;
-    transition: none !important;
-    will-change: auto !important;
-}
-
-/* ENSURE HARDWARE ACCELERATION IS DISABLED FOR TEXT AREAS */
-.monaco-editor .view-lines,
-.monaco-editor .view-line,
-.monaco-editor .view-line span {
-    transform: none !important;
-    will-change: auto !important;
-    contain: layout style !important;
-}
-
-/* OPTIMIZE SCROLLING PERFORMANCE */
-.monaco-editor .monaco-scrollable-element {
-    will-change: auto !important;
-}
-
-.monaco-editor .monaco-scrollable-element .monaco-scrollable-element-content {
-    will-change: auto !important;
-}
-
 .monaco-editor .monaco-list .monaco-list-row.focused {
     background: rgba(16, 185, 129, 0.12) !important;
     border-radius: 6px !important;
@@ -5065,12 +5037,11 @@ export default function App() {
         setChangingMode(null);
     };
 
-    // OPTIMIZED: Use useCallback for stable reference
-    const handleCodeChange = React.useCallback((value) => {
+    const handleCodeChange = (value) => {
         setCode(value || '');
         // Disable custom autocomplete box
         setAutocompleteVisible(false);
-    }, []);
+    };
 
     const insertAutocomplete = (suggestion) => {
         const words = code.split(/\s+/);
@@ -5092,32 +5063,53 @@ export default function App() {
         root.style.setProperty('--theme-glow', theme.glow);
     }, [currentTheme, COLOR_THEMES]);
 
-    // OPTIMIZED: Apply selected font globally with reduced DOM queries
+    // Apply selected font globally
     React.useEffect(() => {
         const selectedFontFamily = FONT_OPTIONS[selectedFont].family;
         const root = document.documentElement;
 
-        // Only update CSS custom property (more efficient)
+        // Update CSS custom property for dynamic font usage
         root.style.setProperty('--code-font-family', selectedFontFamily);
-    }, [selectedFont]);
+
+        // Apply to all code elements directly
+        const codeElements = document.querySelectorAll('code, pre, kbd, samp, textarea, .monaco-editor, .emerald-terminal-text');
+        codeElements.forEach(element => {
+            element.style.fontFamily = selectedFontFamily;
+        });
+    }, [selectedFont, FONT_OPTIONS]);
 
     return (
         <div className="app-container" style={{
             minHeight: '100vh',
-            background: 'linear-gradient(135deg, #fefefe 0%, #f8fafc 50%, #fafafa 100%)', // SIMPLIFIED for performance
+            background: `
+                radial-gradient(circle at 20% 20%, rgba(248,250,252,0.8) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(241,245,249,0.6) 0%, transparent 50%),
+                linear-gradient(135deg, #fefefe 0%, #fafafa 25%, #f8fafc 50%, #f1f5f9 75%, #fafafa 100%)
+            `,
             fontFamily: "'Inter', system-ui, sans-serif",
             position: 'relative',
+            backgroundAttachment: 'fixed',
             overflow: 'hidden'
         }}>
 
-            {/* PERFORMANCE: Floating orbs removed for better performance */}
+            {/* Enhanced Floating Orbs */}
+            <div className="floating-orb"></div>
+            <div className="floating-orb"></div>
+            <div className="floating-orb"></div>
+            <div className="floating-orb"></div>
+            <div className="floating-orb"></div>
 
             {/* UI Content */}
             <div style={{ position: 'relative', zIndex: 10, padding: '20px' }}>
 
 
-                {/* Header - PERFORMANCE OPTIMIZED */}
-                <header style={{ marginBottom: '20px' }}>
+                {/* Header */}
+                <motion.header
+                    initial={{ opacity: 0, y: -30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                    style={{ marginBottom: '20px' }}
+                >
                     <div className="renaissance-panel aesthetic-glow" style={{
                         padding: '24px',
                         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -5252,23 +5244,29 @@ export default function App() {
                             </div>
                         </div>
                     </div>
-                </header>
+                </motion.header>
 
-                {/* Main Content - PERFORMANCE OPTIMIZED */}
-                <main style={{
-                    display: 'grid',
-                    gridTemplateColumns: '1fr 1fr',
-                    gap: '25px',
-                    minHeight: '65vh'
-                }}>
-                    {/* Multi-Mode Editor Panel - PERFORMANCE OPTIMIZED */}
-                    <div className="renaissance-panel" style={{
+                {/* Main Content */}
+                <motion.main
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.3, duration: 0.8 }}
+                    style={{
+                        display: 'grid',
+                        gridTemplateColumns: '1fr 1fr',
+                        gap: '25px',
+                        minHeight: '65vh'
+                    }}
+                >
+                    {/* Multi-Mode Editor Panel */}
+                    <div className="renaissance-panel aesthetic-glow shimmer-effect" style={{
                         padding: '25px',
                         position: 'relative',
                         overflow: 'hidden',
+                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                        animation: 'contentBreathe 6s ease-in-out infinite',
                         zIndex: 1,
-                        pointerEvents: 'auto',
-                        willChange: 'auto' // Prevent unnecessary compositing layers
+                        pointerEvents: 'auto'
                     }}>
 
 
@@ -5281,15 +5279,18 @@ export default function App() {
                             pointerEvents: 'auto'
                         }}>
                             <div style={{
-                                background: 'rgba(255, 255, 255, 0.8)', // SIMPLIFIED for performance
+                                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.4) 100%)',
                                 padding: '16px 24px',
-                                borderBottom: '1px solid rgba(200, 200, 200, 0.4)',
+                                borderBottom: '1px solid rgba(255,255,255,0.4)',
                                 color: 'rgba(15, 23, 42, 0.9)',
                                 fontSize: '14px',
                                 fontWeight: '600',
                                 display: 'flex',
                                 justifyContent: 'space-between',
-                                alignItems: 'center'
+                                alignItems: 'center',
+                                textShadow: '0 1px 0 rgba(255, 255, 255, 0.8), 0 -1px 0 rgba(0, 0, 0, 0.15)',
+                                backdropFilter: 'blur(10px) saturate(150%)',
+                                boxShadow: 'inset 0 1px 2px rgba(255, 255, 255, 0.3), inset 0 -1px 1px rgba(0, 0, 0, 0.05)'
                             }}>
                                 <span>
                                     {editorMode === 'code' ? `${CODE_EXAMPLES[lang].label} Editor` :
@@ -5354,76 +5355,34 @@ export default function App() {
                                         onChange={handleCodeChange}
                                         theme="vs"
                                         options={{
-                                            // PERFORMANCE OPTIMIZED SETTINGS
                                             fontFamily: FONT_OPTIONS[selectedFont].family,
                                             fontSize: 14,
                                             fontWeight: '500',
                                             lineHeight: 1.7,
-
-                                            // INSTANT TYPING OPTIMIZATIONS
                                             minimap: { enabled: false },
                                             scrollBeyondLastLine: false,
-                                            wordWrap: 'off', // Faster than 'on'
-                                            automaticLayout: false, // Manual layout is faster
-                                            padding: { top: 10, bottom: 10, left: 15, right: 15 },
-
-                                            // DISABLE HEAVY FEATURES FOR SPEED
-                                            bracketPairColorization: { enabled: false },
-                                            renderLineHighlight: 'none',
-                                            smoothScrolling: false, // Faster scrolling
-                                            cursorBlinking: 'solid', // Faster than animations
-
-                                            // DISABLE AUTOCOMPLETE & SUGGESTIONS FOR INSTANT TYPING
-                                            suggestOnTriggerCharacters: false,
-                                            quickSuggestions: false,
-                                            wordBasedSuggestions: false,
-                                            parameterHints: { enabled: false },
-                                            autoIndent: 'none',
-                                            acceptSuggestionOnCommitCharacter: false,
-                                            acceptSuggestionOnEnter: 'off',
-                                            snippetSuggestions: 'none',
-
-                                            // DISABLE DECORATIONS FOR SPEED
-                                            renderWhitespace: 'none',
+                                            wordWrap: 'on',
+                                            automaticLayout: true,
+                                            padding: { top: 20, bottom: 20, left: 20, right: 20 },
+                                            bracketPairColorization: { enabled: true },
+                                            renderLineHighlight: 'gutter',
+                                            smoothScrolling: true,
+                                            cursorBlinking: 'smooth',
+                                            suggestOnTriggerCharacters: true,
+                                            quickSuggestions: true,
+                                            background: 'transparent',
+                                            // Font rendering optimizations
+                                            fontLigatures: true,
+                                            renderWhitespace: 'selection',
                                             renderControlCharacters: false,
-                                            renderIndentGuides: false,
+                                            renderIndentGuides: true,
                                             renderLineHighlightOnlyWhenFocus: false,
-
-                                            // DISABLE HIGHLIGHTING FOR PERFORMANCE
+                                            // Disable features that might cause blur
                                             occurrencesHighlight: false,
                                             selectionHighlight: false,
-                                            matchBrackets: 'never',
-
-                                            // FONT OPTIMIZATIONS FOR SPEED
-                                            fontLigatures: false, // Faster rendering
-                                            disableLayerHinting: true,
-
-                                            // SCROLLING OPTIMIZATIONS
-                                            mouseWheelScrollSensitivity: 1,
-                                            fastScrollSensitivity: 5,
-                                            scrollbar: {
-                                                useShadows: false,
-                                                verticalHasArrows: false,
-                                                horizontalHasArrows: false,
-                                                vertical: 'hidden',
-                                                horizontal: 'hidden'
-                                            },
-
-                                            // ADVANCED PERFORMANCE SETTINGS
-                                            readOnly: false,
-                                            domReadOnly: false,
-                                            lineNumbers: 'on',
-                                            lineNumbersMinChars: 3,
-                                            glyphMargin: false,
-                                            folding: false,
-                                            foldingStrategy: 'auto',
-                                            showFoldingControls: 'never',
-                                            foldingHighlight: false,
-                                            links: false,
-                                            colorDecorators: false,
-                                            lightbulb: { enabled: false },
-                                            codeActionsOnSave: {},
-                                            codeActionsOnSaveTimeout: 0
+                                            // Enable better font rendering
+                                            fontFeatureSettings: '"liga" 1, "calt" 1',
+                                            antialiasing: 'default'
                                         }}
                                     />
 
@@ -5453,14 +5412,15 @@ export default function App() {
                         </div>
                     </div>
 
-                    {/* Enhanced Output Terminal - PERFORMANCE OPTIMIZED */}
-                    <div className="renaissance-panel" style={{
+                    {/* Enhanced Output Terminal */}
+                    <div className="renaissance-panel aesthetic-glow shimmer-effect" style={{
                         padding: '25px',
                         position: 'relative',
                         overflow: 'hidden',
-                        willChange: 'auto'
+                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                        animation: 'contentBreathe 6s ease-in-out infinite 1s'
                     }}>
-                        {/* PERFORMANCE: Terminal Glow Effect removed for better performance */}
+                        {/* Terminal Glow Effect */}
 
 
                         <div className="renaissance-terminal pastel-glass-texture" style={{ height: '65vh' }}>
@@ -5502,10 +5462,15 @@ export default function App() {
                             </pre>
                         </div>
                     </div>
-                </main>
+                </motion.main>
 
-                {/* Footer Status - PERFORMANCE OPTIMIZED */}
-                <footer style={{ marginTop: '20px' }}>
+                {/* Footer Status */}
+                <motion.footer
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6, duration: 0.8 }}
+                    style={{ marginTop: '20px' }}
+                >
                     <div className="renaissance-panel aesthetic-glow" style={{ padding: '20px' }}>
                         <div style={{ textAlign: 'center' }}>
                             <div className="premium-text" style={{ color: 'rgba(30, 41, 59, 0.8)', fontSize: '14px', fontWeight: '500' }}>
@@ -5513,7 +5478,7 @@ export default function App() {
                             </div>
                         </div>
                     </div>
-                </footer>
+                </motion.footer>
             </div>
 
             {/* AI Assistant Modal */}
