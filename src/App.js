@@ -2042,40 +2042,40 @@ textarea, pre, code {
 const additionalAnimations = `
 @keyframes sacredGeometry {
     0 %, 100 % {
-        transform: translateX(0 %) translateY(0%) rotate(0deg);
-    opacity: 0.3;
-}
-25 % {
-    transform: translateX(61.803 %) translateY(- 31.831 %) rotate(137.508deg);
-opacity: 0.4;
+        transform: translateX(0%) translateY(0%) rotate(0deg);
+        opacity: 0.3;
     }
-50 % {
-    transform: translateX(-38.197 %) translateY(- 15.915 %) rotate(180deg);
-opacity: 0.5;
+    25% {
+        transform: translateX(61.803%) translateY(-31.831%) rotate(137.508deg);
+        opacity: 0.4;
     }
-75 % {
-    transform: translateX(31.831 %) translateY(- 61.803 %) rotate(275.016deg);
-opacity: 0.35;
+    50% {
+        transform: translateX(-38.197%) translateY(-15.915%) rotate(180deg);
+        opacity: 0.5;
+    }
+    75% {
+        transform: translateX(31.831%) translateY(-61.803%) rotate(275.016deg);
+        opacity: 0.35;
     }
 }
 
 @keyframes renaissanceGlow {
     0 %, 100 % {
         transform: translateY(0px) rotateX(0deg);
-        filter: sepia(0 %) brightness(1) contrast(1);
-        box- shadow:
-    0 0 30px rgba(139, 119, 89, 0.3),
-        0 0 60px rgba(139, 119, 89, 0.2),
+        filter: sepia(0%) brightness(1) contrast(1);
+        box-shadow:
+            0 0 30px rgba(139, 119, 89, 0.3),
+            0 0 60px rgba(139, 119, 89, 0.2),
             0 0 90px rgba(139, 119, 89, 0.1),
-                inset 0 2px 0 rgba(255, 255, 255, 0.4);
-}
-50 % {
-    transform: translateY(-38.197px) rotateX(111.246deg);
-        filter: sepia(20 %) brightness(1.2) contrast(1.1);
-        box- shadow:
-0 0 40px rgba(160, 140, 110, 0.4),
-    0 0 80px rgba(160, 140, 110, 0.3),
-        0 0 120px rgba(160, 140, 110, 0.2),
+            inset 0 2px 0 rgba(255, 255, 255, 0.4);
+    }
+    50% {
+        transform: translateY(-38.197px) rotateX(111.246deg);
+        filter: sepia(20%) brightness(1.2) contrast(1.1);
+        box-shadow:
+            0 0 40px rgba(160, 140, 110, 0.4),
+            0 0 80px rgba(160, 140, 110, 0.3),
+            0 0 120px rgba(160, 140, 110, 0.2),
             inset 0 3px 0 rgba(255, 255, 255, 0.6);
     }
 }
@@ -2093,54 +2093,54 @@ opacity: 0.35;
         transform: scale(0.98) rotate(111.508deg) translateZ(0px);
         opacity: 1;
     }
-    75 % {
-        transform: scale(1.01) rotate(167.262deg) translateZ(- 18.541px);
-    opacity: 0.85;
-}
+    75% {
+        transform: scale(1.01) rotate(167.262deg) translateZ(-18.541px);
+        opacity: 0.85;
+    }
 }
 
 @keyframes mechanicalGears {
-    0 % {
+    0% {
         transform: rotate(0deg);
         filter: contrast(1) brightness(1);
     }
-    100 % {
+    100% {
         transform: rotate(582.48deg);
         filter: contrast(1.1) brightness(1.05);
     }
 }
 
 @keyframes manuscriptFloat {
-    0 %, 100 % {
+    0%, 100% {
         transform: translateY(0px) rotateZ(0deg) scale(1);
-        background- position: 0 % 0 %;
-}
-33 % {
-    transform: translateY(-31.831px) rotateZ(74.164deg) scale(1.02);
-        background- position: 38.196 % 38.196 %;
+        background-position: 0% 0%;
     }
-66 % {
-    transform: translateY(15.915px) rotateZ(148.328deg) scale(0.98);
-        background- position: 61.803 % 61.803 %;
+    33% {
+        transform: translateY(-31.831px) rotateZ(74.164deg) scale(1.02);
+        background-position: 38.196% 38.196%;
+    }
+    66% {
+        transform: translateY(15.915px) rotateZ(148.328deg) scale(0.98);
+        background-position: 61.803% 61.803%;
     }
 }
 
 @keyframes goldenRatio {
-    0 % { transform: scale(1) rotate(0deg); }
-    50 % { transform: scale(0.809) rotate(137.508deg); }
-    100 % { transform: scale(1) rotate(275.016deg); }
+    0% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(0.809) rotate(137.508deg); }
+    100% { transform: scale(1) rotate(275.016deg); }
 }
 
 @keyframes anatomicalPulse {
-    0 %, 100 % {
+    0%, 100% {
         transform: scale(1) translateZ(0px);
-        filter: sepia(10 %) brightness(1) hue- rotate(0deg);
-    border - radius: 12px;
-}
-50 % {
-    transform: scale(1.03) translateZ(6px);
-        filter: sepia(25 %) brightness(1.15) hue- rotate(9deg);
-border - radius: 15px;
+        filter: sepia(10%) brightness(1) hue-rotate(0deg);
+        border-radius: 12px;
+    }
+    50% {
+        transform: scale(1.03) translateZ(6px);
+        filter: sepia(25%) brightness(1.15) hue-rotate(9deg);
+        border-radius: 15px;
     }
 }
 `;
@@ -2175,51 +2175,51 @@ const RenaissancePanel = ({ children, className, variant = 'manuscript', ...prop
     const variants = {
         manuscript: {
             background: `
-linear - gradient(135deg, rgba(244, 241, 232, 0.95), rgba(232, 225, 208, 0.85)),
-    radial - gradient(circle at 30 % 30 %, rgba(139, 119, 89, 0.15), transparent 50 %),
-    url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 0L40 80M0 40L80 40' stroke='%23d4c4a8' stroke-width='0.5' opacity='0.3'/%3E%3Ccircle cx='40' cy='40' r='30' fill='none' stroke='%23d4c4a8' stroke-width='0.3' opacity='0.2'/%3E%3C/svg%3E")
-        `,
+                linear-gradient(135deg, rgba(244, 241, 232, 0.95), rgba(232, 225, 208, 0.85)),
+                radial-gradient(circle at 30% 30%, rgba(139, 119, 89, 0.15), transparent 50%),
+                url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 0L40 80M0 40L80 40' stroke='%23d4c4a8' stroke-width='0.5' opacity='0.3'/%3E%3Ccircle cx='40' cy='40' r='30' fill='none' stroke='%23d4c4a8' stroke-width='0.3' opacity='0.2'/%3E%3C/svg%3E")
+            `,
             backdropFilter: 'blur(20px) saturate(130%)',
             border: '2px solid rgba(139, 119, 89, 0.4)',
             boxShadow: `
-0 25px 50px rgba(139, 69, 19, 0.3),
-    0 12px 25px rgba(139, 119, 89, 0.2),
-        inset 0 2px 0 rgba(255, 255, 255, 0.6),
-            inset 0 - 2px 0 rgba(139, 119, 89, 0.3),
+                0 25px 50px rgba(139, 69, 19, 0.3),
+                0 12px 25px rgba(139, 119, 89, 0.2),
+                inset 0 2px 0 rgba(255, 255, 255, 0.6),
+                inset 0 -2px 0 rgba(139, 119, 89, 0.3),
                 0 0 0 1px rgba(139, 119, 89, 0.1)
-                    `
+            `
         },
         anatomical: {
             background: `
-linear - gradient(135deg, rgba(248, 245, 235, 0.95), rgba(240, 235, 220, 0.88)),
-    radial - gradient(circle at 20 % 80 %, rgba(139, 119, 89, 0.1), transparent 40 %),
-    radial - gradient(circle at 80 % 20 %, rgba(160, 140, 110, 0.08), transparent 30 %),
-    url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg stroke='%23d4c4a8' stroke-width='0.4' fill='none' opacity='0.25'%3E%3Ccircle cx='60' cy='60' r='45'/%3E%3Crect x='25' y='25' width='70' height='70'/%3E%3Cpath d='M60 15L60 105M15 60L105 60'/%3E%3Cpath d='M30 30L90 90M90 30L30 90'/%3E%3C/g%3E%3C/svg%3E")
-        `,
+                linear-gradient(135deg, rgba(248, 245, 235, 0.95), rgba(240, 235, 220, 0.88)),
+                radial-gradient(circle at 20% 80%, rgba(139, 119, 89, 0.1), transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(160, 140, 110, 0.08), transparent 30%),
+                url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg stroke='%23d4c4a8' stroke-width='0.4' fill='none' opacity='0.25'%3E%3Ccircle cx='60' cy='60' r='45'/%3E%3Crect x='25' y='25' width='70' height='70'/%3E%3Cpath d='M60 15L60 105M15 60L105 60'/%3E%3Cpath d='M30 30L90 90M90 30L30 90'/%3E%3C/g%3E%3C/svg%3E")
+            `,
             backdropFilter: 'blur(25px) saturate(140%)',
             border: '2px solid rgba(160, 140, 110, 0.5)',
             boxShadow: `
-0 30px 60px rgba(139, 69, 19, 0.35),
-    0 15px 30px rgba(160, 140, 110, 0.25),
-        inset 0 3px 0 rgba(255, 255, 255, 0.7),
-            inset 0 - 3px 0 rgba(139, 119, 89, 0.4),
+                0 30px 60px rgba(139, 69, 19, 0.35),
+                0 15px 30px rgba(160, 140, 110, 0.25),
+                inset 0 3px 0 rgba(255, 255, 255, 0.7),
+                inset 0 -3px 0 rgba(139, 119, 89, 0.4),
                 0 0 100px rgba(160, 140, 110, 0.15)
-                    `
+            `
         },
         mechanical: {
             background: `
-linear - gradient(135deg, rgba(141, 110, 99, 0.9), rgba(109, 76, 65, 0.85)),
-    radial - gradient(circle at 50 % 50 %, rgba(184, 156, 132, 0.2), transparent 60 %),
-    url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg stroke='%236d4c41' stroke-width='0.8' fill='none' opacity='0.4'%3E%3Ccircle cx='50' cy='50' r='35' /%3E%3Ccircle cx='50' cy='50' r='25' /%3E%3Ccircle cx='50' cy='50' r='15' /%3E%3Cpath d='M50 15L50 85M15 50L85 50'/%3E%3Cpath d='M35.35 35.35L64.64 64.64M64.64 35.35L35.35 64.64'/%3E%3C/g%3E%3C/svg%3E")
-        `,
+                linear-gradient(135deg, rgba(141, 110, 99, 0.9), rgba(109, 76, 65, 0.85)),
+                radial-gradient(circle at 50% 50%, rgba(184, 156, 132, 0.2), transparent 60%),
+                url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg stroke='%236d4c41' stroke-width='0.8' fill='none' opacity='0.4'%3E%3Ccircle cx='50' cy='50' r='35' /%3E%3Ccircle cx='50' cy='50' r='25' /%3E%3Ccircle cx='50' cy='50' r='15' /%3E%3Cpath d='M50 15L50 85M15 50L85 50'/%3E%3Cpath d='M35.35 35.35L64.64 64.64M64.64 35.35L35.35 64.64'/%3E%3C/g%3E%3C/svg%3E")
+            `,
             backdropFilter: 'blur(18px) saturate(120%)',
             border: '3px solid rgba(141, 110, 99, 0.6)',
             boxShadow: `
-0 20px 40px rgba(109, 76, 65, 0.4),
-    0 10px 20px rgba(141, 110, 99, 0.3),
-        inset 0 2px 0 rgba(184, 156, 132, 0.8),
-            inset 0 - 2px 0 rgba(109, 76, 65, 0.5)
-                `
+                0 20px 40px rgba(109, 76, 65, 0.4),
+                0 10px 20px rgba(141, 110, 99, 0.3),
+                inset 0 2px 0 rgba(184, 156, 132, 0.8),
+                inset 0 -2px 0 rgba(109, 76, 65, 0.5)
+            `
         }
     };
 
@@ -2249,10 +2249,10 @@ hover: scale - [1.01] hover: rotate - [0.2deg]
                 className="absolute inset-0 opacity-30 pointer-events-none"
                 style={{
                     background: `
-radial - gradient(circle at 23.606 % 23.606 %, transparent ${100 / PHI}%, rgba(139,119,89,0.1) ${100 / PHI + 1}%, rgba(139, 119, 89, 0.1) ${200 / PHI}%, transparent ${200 / PHI + 1}%),
-    radial - gradient(circle at 61.803 % 61.803 %, transparent ${100 / PHI}%, rgba(160,140,110,0.08) ${100 / PHI + 1}%, rgba(160, 140, 110, 0.08) ${200 / PHI}%, transparent ${200 / PHI + 1}%),
-    radial - gradient(circle at 76.394 % 23.606 %, transparent ${100 / PHI}%, rgba(139,119,89,0.06) ${100 / PHI + 1}%, rgba(139, 119, 89, 0.06) ${200 / PHI}%, transparent ${200 / PHI + 1}%)
-        `,
+                        radial-gradient(circle at 23.606% 23.606%, transparent ${100 / PHI}%, rgba(139,119,89,0.1) ${100 / PHI + 1}%, rgba(139, 119, 89, 0.1) ${200 / PHI}%, transparent ${200 / PHI + 1}%),
+                        radial-gradient(circle at 61.803% 61.803%, transparent ${100 / PHI}%, rgba(160,140,110,0.08) ${100 / PHI + 1}%, rgba(160, 140, 110, 0.08) ${200 / PHI}%, transparent ${200 / PHI + 1}%),
+                        radial-gradient(circle at 76.394% 23.606%, transparent ${100 / PHI}%, rgba(139,119,89,0.06) ${100 / PHI + 1}%, rgba(139, 119, 89, 0.06) ${200 / PHI}%, transparent ${200 / PHI + 1}%)
+                    `,
                     backgroundSize: `${80 * PHI}px ${80 * PHI} px, ${60 * PHI}px ${60 * PHI} px, ${100 * PHI}px ${100 * PHI} px`,
                     animation: 'sacredGeometry 25s ease-in-out infinite'
                 }}
@@ -2332,9 +2332,9 @@ url("data:image/svg+xml,%3Csvg viewBox='0 0 800 600' xmlns='http://www.w3.org/20
                 className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-700 pointer-events-none"
                 style={{
                     background: `
-radial - gradient(circle at var(--mouse - x, 50 %) var(--mouse - y, 50 %),
-    rgba(255, 215, 0, 0.1), transparent 40 %)
-`,
+                        radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+                            rgba(255, 215, 0, 0.1), transparent 40%)
+                    `,
                     filter: 'blur(30px)',
                     borderRadius: `${20 / PHI} px`
                 }}
@@ -2349,9 +2349,9 @@ const NeuralButton = ({ children, onClick, disabled, variant = 'primary', size =
 
     const variants = {
         primary: {
-            background: `linear - gradient(135deg,
-    rgba(255, 255, 255, 0.4),
-    rgba(255, 255, 255, 0.2))`,
+            background: `linear-gradient(135deg,
+                rgba(255, 255, 255, 0.4),
+                rgba(255, 255, 255, 0.2))`,
             color: '#1a1a1a',
             boxShadow: `
 0 10px 30px rgba(0, 0, 0, 0.1),
@@ -2360,7 +2360,7 @@ const NeuralButton = ({ children, onClick, disabled, variant = 'primary', size =
             inset 0 1px 0 rgba(255, 255, 255, 0.6)`
         },
         neural: {
-            background: `linear - gradient(135deg,
+            background: `linear-gradient(135deg,
                 rgba(255, 255, 255, 0.5),
                 rgba(255, 255, 255, 0.2))`,
             color: '#1a1a1a',
@@ -2371,7 +2371,7 @@ const NeuralButton = ({ children, onClick, disabled, variant = 'primary', size =
             inset 0 1px 0 rgba(255, 255, 255, 0.7)`
         },
         quantum: {
-            background: `linear - gradient(135deg,
+            background: `linear-gradient(135deg,
                 rgba(255, 255, 255, 0.6),
                 rgba(255, 255, 255, 0.3))`,
             color: '#1a1a1a',
@@ -2425,15 +2425,15 @@ transition - all duration - 500 ease - out
                 className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300"
                 style={{
                     background: `
-radial - gradient(circle at 30 % 30 %,
-    rgba(255, 255, 255, 0.4) 0 %,
-    rgba(255, 255, 255, 0.1) 30 %,
-    transparent 70 %),
-    radial - gradient(circle at 70 % 70 %,
-        rgba(255, 255, 255, 0.3) 0 %,
-        rgba(255, 255, 255, 0.1) 20 %,
-        transparent 50 %)
-        `,
+                        radial-gradient(circle at 30% 30%,
+                            rgba(255, 255, 255, 0.4) 0%,
+                            rgba(255, 255, 255, 0.1) 30%,
+                            transparent 70%),
+                        radial-gradient(circle at 70% 70%,
+                            rgba(255, 255, 255, 0.3) 0%,
+                            rgba(255, 255, 255, 0.1) 20%,
+                            transparent 50%)
+                    `,
                     filter: 'blur(4px)',
                     mixBlendMode: 'overlay'
                 }}
@@ -2444,11 +2444,11 @@ radial - gradient(circle at 30 % 30 %,
                 className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-700"
                 style={{
                     background: `
-radial - gradient(circle at 50 % 50 %,
-    transparent 20 %,
-    rgba(255, 255, 255, 0.1) 40 %,
-    transparent 60 %)
-    `,
+                        radial-gradient(circle at 50% 50%,
+                            transparent 20%,
+                            rgba(255, 255, 255, 0.1) 40%,
+                            transparent 60%)
+                    `,
                     animation: isHovered ? 'ripple 2s ease-out infinite' : 'none'
                 }}
             />
@@ -2463,11 +2463,11 @@ radial - gradient(circle at 50 % 50 %,
                 className="absolute inset-0 rounded-2xl opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                 style={{
                     background: `
-linear - gradient(135deg,
-    rgba(255, 255, 255, 0.4) 0 %,
-    transparent 50 %,
-    rgba(255, 255, 255, 0.1) 100 %)
-    `,
+                        linear-gradient(135deg,
+                            rgba(255, 255, 255, 0.4) 0%,
+                            transparent 50%,
+                            rgba(255, 255, 255, 0.1) 100%)
+                    `,
                     mixBlendMode: 'overlay'
                 }}
             />
@@ -2518,9 +2518,9 @@ transition - all duration - 500 ease - out
 `}
                     style={{
                         background: `
-linear - gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05)),
-    radial - gradient(circle at 20 % 30 %, rgba(59, 130, 246, 0.1), transparent 50 %)
-        `,
+                            linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05)),
+                            radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.1), transparent 50%)
+                        `,
                         backdropFilter: 'blur(30px) saturate(180%)',
                         border: '1px solid rgba(255, 255, 255, 0.2)',
                         boxShadow: `
@@ -2558,9 +2558,9 @@ linear - gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05)),
                         className="absolute top-full left-0 right-0 z-50 mt-2"
                         style={{
                             background: `
-linear - gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08)),
-    radial - gradient(circle at 50 % 50 %, rgba(59, 130, 246, 0.08), transparent 70 %)
-        `,
+                                linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08)),
+                                radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08), transparent 70%)
+                            `,
                             backdropFilter: 'blur(40px) saturate(200%)',
                             border: '1px solid rgba(255, 255, 255, 0.25)',
                             borderRadius: '16px',
@@ -2579,10 +2579,10 @@ linear - gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08)),
                                     setIsOpen(false);
                                 }}
                                 className={`
-px - 6 py - 4 cursor - pointer transition - all duration - 300
-hover: bg - white / 10 first: rounded - t - 2xl last: rounded - b - 2xl
+                                    px-6 py-4 cursor-pointer transition-all duration-300
+                                    hover:bg-white/10 first:rounded-t-2xl last:rounded-b-2xl
                                     ${option.value === value ? 'bg-white/15' : ''}
-`}
+                                `}
                                 initial={{ opacity: 0, x: -10 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: index * 0.05 }}
@@ -2607,16 +2607,16 @@ hover: bg - white / 10 first: rounded - t - 2xl last: rounded - b - 2xl
 const HolographicBadge = ({ children, className = '' }) => (
     <motion.span
         className={`
-inline - flex items - center px - 4 py - 2 rounded - xl
-font - bold text - sm tracking - wider uppercase
+            inline-flex items-center px-4 py-2 rounded-xl
+            font-bold text-sm tracking-wider uppercase
             ${className}
-`}
+        `}
         style={{
             background: `
-linear - gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1)),
-    linear - gradient(45deg, rgba(59, 130, 246, 0.1), transparent 30 %),
-    linear - gradient(-45deg, rgba(147, 51, 234, 0.08), transparent 30 %)
-        `,
+                linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1)),
+                linear-gradient(45deg, rgba(59, 130, 246, 0.1), transparent 30%),
+                linear-gradient(-45deg, rgba(147, 51, 234, 0.08), transparent 30%)
+            `,
             backdropFilter: 'blur(20px) saturate(150%)',
             border: '1px solid rgba(255, 255, 255, 0.3)',
             boxShadow: `

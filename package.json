@@ -21,7 +21,16 @@
     "dependencies": {
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
-        "@monaco-editor/react": "^4.6.0"
+        "@react-three/fiber": "^8.15.12",
+        "@react-three/drei": "^9.88.13",
+        "@monaco-editor/react": "^4.6.0",
+        "three": "^0.161.0",
+        "framer-motion": "^10.16.16",
+        "react-spring": "^9.7.3",
+        "@react-spring/web": "^9.7.3",
+        "@react-spring/three": "^9.7.3",
+        "leva": "^0.9.35",
+        "three-mesh-bvh": "^0.8.3"
     },
     "devDependencies": {
         "@babel/core": "^7.23.6",
@@ -34,6 +43,11 @@
         "webpack": "^5.89.0",
         "webpack-cli": "^5.1.4",
         "webpack-dev-server": "^4.15.1"
+    },
+    "overrides": {
+        "@react-three/drei": {
+            "three-mesh-bvh": "^0.8.3"
+        }
     },
     "engines": {
         "node": ">=18.0.0",
