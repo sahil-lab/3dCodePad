@@ -2271,7 +2271,7 @@ url("data:image/svg+xml,%3Csvg viewBox='0 0 800 600' xmlns='http://www.w3.org/20
 
             {/* Vitruvian Man Inspired Golden Ratio Guidelines */}
             <div className="absolute inset-0 pointer-events-none opacity-10">
-                <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                <svg style={{ width: '100%', height: '100%' }} xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <pattern id="goldenGrid" x="0" y="0" width={`${100 / PHI} `} height={`${100 / PHI} `} patternUnits="userSpaceOnUse">
                             <path
@@ -2295,22 +2295,24 @@ url("data:image/svg+xml,%3Csvg viewBox='0 0 800 600' xmlns='http://www.w3.org/20
             </div>
 
             {/* Content with Renaissance Typography */}
-            <div className="relative z-10 p-8" style={{ fontFamily: "'Crimson Text', 'Times New Roman', serif" }}>
+            <div style={{ position: 'relative', zIndex: 10, padding: '32px', fontFamily: "'Crimson Text', 'Times New Roman', serif" }}>
                 {children}
             </div>
 
             {/* Leonardo's Mirror Writing Animation */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, left: 0, overflow: 'hidden', pointerEvents: 'none' }}>
                 {Array.from({ length: 5 }, (_, i) => (
                     <motion.div
                         key={i}
-                        className="absolute text-xs opacity-20 font-serif"
                         style={{
-                            right: `${20 + Math.random() * 60}% `,
-                            top: `${20 + Math.random() * 60}% `,
+                            position: 'absolute',
+                            fontSize: `${10 + Math.random() * 6}px`,
+                            opacity: 0.2,
+                            fontFamily: 'serif',
+                            right: `${20 + Math.random() * 60}%`,
+                            top: `${20 + Math.random() * 60}%`,
                             transform: 'scaleX(-1)', // Mirror writing effect
-                            color: 'rgba(139, 119, 89, 0.6)',
-                            fontSize: `${10 + Math.random() * 6} px`
+                            color: 'rgba(139, 119, 89, 0.6)'
                         }}
                         animate={{
                             opacity: [0.1, 0.3, 0.1],
@@ -2530,12 +2532,12 @@ transition - all duration - 500 ease - out
             `
                     }}
                 >
-                    <div className="flex items-center justify-between">
-                        <span className="text-gray-800 font-semibold tracking-wide">
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <span style={{ color: '#1f2937', fontWeight: '600', letterSpacing: '0.025em' }}>
                             {selectedOption ? selectedOption.label : placeholder}
                         </span>
                         <motion.svg
-                            className="w-5 h-5 text-gray-600 ml-2"
+                            style={{ width: '20px', height: '20px', color: '#4b5563', marginLeft: '8px' }}
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -2555,8 +2557,13 @@ transition - all duration - 500 ease - out
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: -10, scale: 0.95 }}
                         transition={{ duration: 0.3, ease: "easeOut" }}
-                        className="absolute top-full left-0 right-0 z-50 mt-2"
                         style={{
+                            position: 'absolute',
+                            top: '100%',
+                            left: 0,
+                            right: 0,
+                            zIndex: 50,
+                            marginTop: '8px',
                             background: `
                                 linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08)),
                                 radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08), transparent 70%)
@@ -2565,10 +2572,10 @@ transition - all duration - 500 ease - out
                             border: '1px solid rgba(255, 255, 255, 0.25)',
                             borderRadius: '16px',
                             boxShadow: `
-0 20px 40px rgba(0, 0, 0, 0.15),
-    0 8px 20px rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.4)
-            `
+                                0 20px 40px rgba(0, 0, 0, 0.15),
+                                0 8px 20px rgba(0, 0, 0, 0.1),
+                                inset 0 1px 0 rgba(255, 255, 255, 0.4)
+                            `
                         }}
                     >
                         {options.map((option, index) => (
@@ -2591,7 +2598,7 @@ transition - all duration - 500 ease - out
                                     x: 4
                                 }}
                             >
-                                <span className="text-gray-800 font-medium tracking-wide">
+                                <span style={{ color: '#1f2937', fontWeight: '500', letterSpacing: '0.025em' }}>
                                     {option.label}
                                 </span>
                             </motion.div>
@@ -5079,7 +5086,7 @@ export default function App() {
     }, [selectedFont, FONT_OPTIONS]);
 
     return (
-        <div className="app-container" style={{
+        <div style={{
             minHeight: '100vh',
             background: `
                 radial-gradient(circle at 20% 20%, rgba(248,250,252,0.8) 0%, transparent 50%),
@@ -5119,7 +5126,7 @@ export default function App() {
                     }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '20px' }}>
                             <div style={{ flex: '0 0 auto' }}>
-                                <h1 className="premium-brand-title premium-title" style={{
+                                <h1 style={{
                                     margin: 0,
                                     marginBottom: '10px',
                                     fontSize: '36px',
@@ -5127,7 +5134,7 @@ export default function App() {
                                 }}>
                                     CodePad
                                 </h1>
-                                <p className="premium-subtitle glass-text" style={{ margin: 0 }}>
+                                <p style={{ margin: 0 }}>
                                     Professional Development Environment
                                 </p>
                             </div>
@@ -5473,7 +5480,7 @@ export default function App() {
                 >
                     <div className="renaissance-panel aesthetic-glow" style={{ padding: '20px' }}>
                         <div style={{ textAlign: 'center' }}>
-                            <div className="premium-text" style={{ color: 'rgba(30, 41, 59, 0.8)', fontSize: '14px', fontWeight: '500' }}>
+                            <div style={{ color: 'rgba(30, 41, 59, 0.8)', fontSize: '14px', fontWeight: '500' }}>
                                 {isExecuting ? 'Processing...' : <Stopwatch isRunning={!isExecuting} />}
                             </div>
                         </div>
