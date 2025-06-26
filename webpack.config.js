@@ -42,9 +42,13 @@ module.exports = {
     ],
     resolve: {
         alias: {
-            'three-mesh-bvh': path.resolve(__dirname, 'node_modules/three-mesh-bvh')
+            'three-mesh-bvh': path.resolve(__dirname, 'node_modules/three-mesh-bvh'),
+            'process/browser': require.resolve('process/browser')
         },
         extensions: ['.js', '.jsx'],
+        fallback: {
+            process: require.resolve('process/browser')
+        }
     },
     devServer: {
         static: {
