@@ -166,6 +166,16 @@ Contributions are welcome! Feel free to:
 - [ ] Mobile touch controls
 - [ ] Custom shader support
 
+## Environment Variables
+
+Create a `.env` file in the project root (not committed) based on `.env.example`:
+
+```
+REACT_APP_OPENAI_API_KEY=your_openai_api_key_here
+```
+
+During the webpack build, this key is injected at compile-time via `DefinePlugin`. Ensure it is set in your hosting environment variables as well (e.g., Vercel project settings).
+
 ---
 
 **Made with ❤️ and lots of ☕**
