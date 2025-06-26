@@ -1,6 +1,40 @@
 import React, { useState, useRef, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MonacoEditor from '@monaco-editor/react';
+import axios from 'axios';
+
+// Judge0 API Configuration (RapidAPI Extra CE format)
+const JUDGE0_CONFIG = {
+    BASE_URL: 'https://judge0-extra-ce.p.rapidapi.com',
+    API_KEY: 'c88645d450msh5e2f974ef1b601fp18d783jsne06a11ccd96a',
+    API_HOST: 'judge0-extra-ce.p.rapidapi.com'
+};
+
+// Judge0 Language ID Mapping (Correct for YOUR Extra CE instance)
+const JUDGE0_LANGUAGE_IDS = {
+    javascript: null,  // ❌ Not available in your instance
+    python: 25,        // ✅ Python for ML (3.11.2) - best option
+    java: 4,           // ✅ Java (OpenJDK 14.0.1)
+    cpp: 2,           // ✅ C++ (Clang 10.0.1) 
+    csharp: 21,       // ✅ C# (.NET Core SDK 3.1.406)
+    typescript: null, // ❌ Not available in your instance
+    go: null,         // ❌ Not available in your instance
+    rust: null,       // ❌ Not available in your instance
+    php: null,        // ❌ Not available in your instance
+    swift: null,      // ❌ Not available in your instance
+    kotlin: null,     // ❌ Not available in your instance
+    dart: null,       // ❌ Not available in your instance
+    ruby: null,       // ❌ Not available in your instance
+    scala: null,      // ❌ Not available in your instance
+    c: 1              // ✅ C (Clang 10.0.1)
+};
+
+// OpenAI Configuration
+const OPENAI_CONFIG = {
+    // Use environment variable to avoid exposing secrets in source code
+    API_KEY: process.env.REACT_APP_OPENAI_API_KEY || '',
+    BASE_URL: 'https://api.openai.com/v1/chat/completions'
+};
 
 /*
   🎨 QUANTUM CODEPAD - DA VINCI RENAISSANCE EDITION 🎨
@@ -4058,6 +4092,118 @@ Execution: 0.001s`
     }
 };
 
+// Judge0 API Functions (RapidAPI format)
+const submitCode = async (sourceCode, languageId, stdin = '') => {
+    try {
+        console.log('🔗 Submitting to Judge0 via RapidAPI...', {
+            languageId,
+            codeLength: sourceCode.length,
+            endpoint: `${JUDGE0_CONFIG.BASE_URL}/submissions?base64_encoded=true&wait=false`
+        });
+
+        const requestData = {
+            source_code: btoa(sourceCode),
+            language_id: languageId,
+            stdin: btoa(stdin || ""),
+            cpu_time_limit: "2"
+        };
+
+        const headers = {
+            'Content-Type': 'application/json',
+            'X-RapidAPI-Key': JUDGE0_CONFIG.API_KEY,
+            'X-RapidAPI-Host': JUDGE0_CONFIG.API_HOST
+        };
+
+        console.log('📤 Request headers:', headers);
+        console.log('📤 Request data:', requestData);
+
+        const response = await axios.post(
+            `${JUDGE0_CONFIG.BASE_URL}/submissions?base64_encoded=true&wait=false`,
+            requestData,
+            { headers }
+        );
+
+        console.log('✅ Submission successful:', response.data);
+        return response.data.token;
+    } catch (error) {
+        console.error('❌ Submission error:', {
+            message: error.message,
+            status: error.response?.status,
+            statusText: error.response?.statusText,
+            data: error.response?.data,
+            headers: error.response?.headers
+        });
+        throw error;
+    }
+};
+
+const getSubmissionResult = async (token) => {
+    try {
+        const endpoint = `${JUDGE0_CONFIG.BASE_URL}/submissions/${token}?base64_encoded=true`;
+        console.log('📥 Fetching result from:', endpoint);
+
+        const headers = {
+            'X-RapidAPI-Key': JUDGE0_CONFIG.API_KEY,
+            'X-RapidAPI-Host': JUDGE0_CONFIG.API_HOST
+        };
+
+        const response = await axios.get(endpoint, { headers });
+        console.log('📄 Result received:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('❌ Result fetch error:', {
+            message: error.message,
+            status: error.response?.status,
+            statusText: error.response?.statusText,
+            data: error.response?.data
+        });
+        throw error;
+    }
+};
+
+// OpenAI API Function
+const callOpenAI = async (prompt) => {
+    try {
+        console.log('🤖 Calling OpenAI API...');
+
+        const response = await axios.post(
+            OPENAI_CONFIG.BASE_URL,
+            {
+                model: "gpt-3.5-turbo",
+                messages: [
+                    {
+                        role: "system",
+                        content: "You are a helpful programming assistant. Generate code suggestions, explanations, and optimizations. Keep responses concise and practical."
+                    },
+                    {
+                        role: "user",
+                        content: prompt
+                    }
+                ],
+                max_tokens: 1000,
+                temperature: 0.7
+            },
+            {
+                headers: {
+                    'Authorization': `Bearer ${OPENAI_CONFIG.API_KEY}`,
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+
+        console.log('✅ OpenAI response received');
+        return response.data.choices[0].message.content;
+    } catch (error) {
+        console.error('❌ OpenAI API error:', {
+            message: error.message,
+            status: error.response?.status,
+            statusText: error.response?.statusText,
+            data: error.response?.data
+        });
+        throw error;
+    }
+};
+
 // AI Assistant Component with Mind-Blowing Interface
 const AIAssistant = ({ isVisible, onClose, onSuggestion }) => {
     const [aiPrompt, setAiPrompt] = useState('');
@@ -4065,88 +4211,50 @@ const AIAssistant = ({ isVisible, onClose, onSuggestion }) => {
     const [suggestions, setSuggestions] = useState([]);
 
     const generateAISuggestion = async () => {
+        if (!aiPrompt.trim()) {
+            alert('Please enter a prompt for the AI assistant');
+            return;
+        }
+
         setAiThinking(true);
+        setSuggestions([]);
 
-        const aiSuggestions = [
-            {
-                title: "🧠 Quantum Neural Network Optimization",
-                code: `// AI-Generated Quantum Code
-class QuantumOptimizer {
-    constructor() {
-        this.entanglementDepth = 64;
-        this.coherenceTime = 150; // microseconds
-        this.fidelity = 0.9995;
-    }
-    
-    async optimizeQuantumCircuit(circuit) {
-        const optimized = circuit.map(gate => ({
-            ...gate,
-            fidelity: gate.fidelity * this.fidelity,
-            coherencePreserved: true
-        }));
-        
-        return {
-            circuit: optimized,
-            performance: 'Enhanced by 247%',
-            quantumAdvantage: true
-        };
-    }
-}`,
-                description: "AI-optimized quantum circuit with enhanced performance"
-            },
-            {
-                title: "🚀 Ultra-Fast ML Pipeline",
-                code: `// AI-Powered Machine Learning Pipeline
-class UltraMLPipeline {
-    async processData(data) {
-        const features = await this.extractFeatures(data);
-        const predictions = await this.quantumInference(features);
-        
-        return {
-            accuracy: 0.9847,
-            processingTime: '0.23ms',
-            quantumEnhanced: true,
-            predictions
-        };
-    }
-    
-    async quantumInference(features) {
-        // Quantum-accelerated inference
-        return features.map(f => Math.tanh(f * Math.PI));
-    }
-}`,
-                description: "Lightning-fast ML with quantum acceleration"
-            },
-            {
-                title: "🌟 Advanced Data Structures",
-                code: `// AI-Suggested Quantum Data Structure
-class QuantumHashMap {
-    constructor() {
-        this.qubits = new Array(64).fill(0);
-        this.superposition = true;
-    }
-    
-    quantumSet(key, value) {
-        const hash = this.quantumHash(key);
-        this.qubits[hash] = value;
-        return this.measureCoherence();
-    }
-    
-    quantumHash(key) {
-        return Math.abs(key.split('').reduce((a, b) => {
-            return ((a << 5) - a + b.charCodeAt(0)) & 63;
-        }, 0));
-    }
-}`,
-                description: "Quantum-enhanced data structure for ultra-fast access"
-            }
-        ];
+        try {
+            console.log('🤖 Generating AI suggestion with prompt:', aiPrompt);
+            const aiResponse = await callOpenAI(aiPrompt);
 
-        await new Promise(resolve => setTimeout(resolve, 1500));
+            // Parse the AI response to extract code and description
+            const suggestion = {
+                title: "🤖 AI Generated Code",
+                code: aiResponse,
+                description: "AI-generated code based on your prompt"
+            };
 
-        const randomSuggestion = aiSuggestions[Math.floor(Math.random() * aiSuggestions.length)];
-        setSuggestions([randomSuggestion]);
-        setAiThinking(false);
+            setSuggestions([suggestion]);
+        } catch (error) {
+            console.error('❌ AI suggestion failed:', error);
+
+            // Fallback to mock suggestion if OpenAI fails
+            const fallbackSuggestion = {
+                title: "⚠️ AI Service Unavailable - Mock Response",
+                code: `// AI service is currently unavailable
+// This is a fallback example for your prompt: "${aiPrompt}"
+
+console.log("AI assistant is temporarily offline");
+console.log("Please try again later or check your API configuration");
+
+// Example code structure:
+function exampleFunction() {
+    // Your code implementation would go here
+    return "AI-generated code will appear here when service is available";
+}`,
+                description: "Mock response - AI service unavailable"
+            };
+
+            setSuggestions([fallbackSuggestion]);
+        } finally {
+            setAiThinking(false);
+        }
     };
 
     if (!isVisible) return null;
@@ -5000,25 +5108,95 @@ export default function App() {
 
     const executeCode = async () => {
         setIsExecuting(true);
-        setOutput('⚡ Initializing code execution...\n');
+        setOutput('🚀 Initializing Judge0 code execution...\n');
 
-        const steps = [
-            'Loading development environment...',
-            'Establishing secure connections...',
-            'Compiling source code...',
-            'Running execution pipeline...',
-            'Processing output results...',
-            'Execution complete.'
-        ];
+        try {
+            // Check if language is supported in your Judge0 Extra CE instance
+            let languageId = JUDGE0_LANGUAGE_IDS[lang];
+            if (!languageId || languageId === null) {
+                setOutput(prev => prev + `❌ Language ${lang} not available in your Judge0 Extra CE instance\n`);
+                setOutput(prev => prev + `✅ Available languages: Java, Python, C++, C#, C\n`);
+                setOutput(prev => prev + `🔍 Try switching to one of the supported languages\n`);
+                setIsExecuting(false);
+                return;
+            }
 
-        for (let i = 0; i < steps.length; i++) {
-            await new Promise(resolve => setTimeout(resolve, 400));
-            setOutput(prev => prev + steps[i] + '\n');
+            setOutput(prev => prev + `📝 Language: ${CODE_EXAMPLES[lang].label} (ID: ${languageId})\n`);
+            setOutput(prev => prev + '🔗 Submitting code to Judge0...\n');
+
+            // Submit code to Judge0
+            const token = await submitCode(code, languageId);
+            setOutput(prev => prev + `✅ Code submitted! Token: ${token}\n`);
+            setOutput(prev => prev + '⏳ Waiting for compilation and execution...\n');
+
+            // Poll for results
+            let attempts = 0;
+            const maxAttempts = 30; // 30 seconds max wait
+
+            while (attempts < maxAttempts) {
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                attempts++;
+
+                const result = await getSubmissionResult(token);
+                setOutput(prev => prev + `📊 Checking status... (${attempts}/${maxAttempts})\n`);
+
+                if (result.status && result.status.id <= 2) {
+                    // Still in queue or processing
+                    setOutput(prev => prev + `🔄 Status: ${result.status.description}\n`);
+                    continue;
+                }
+
+                // Execution completed
+                setOutput(prev => prev + `🎯 Status: ${result.status.description}\n`);
+                setOutput(prev => prev + '='.repeat(50) + '\n');
+
+                if (result.stdout) {
+                    const stdout = atob(result.stdout).trim();
+                    if (stdout) {
+                        setOutput(prev => prev + '📤 OUTPUT:\n');
+                        setOutput(prev => prev + stdout + '\n');
+                    }
+                }
+
+                if (result.stderr) {
+                    const stderr = atob(result.stderr).trim();
+                    if (stderr) {
+                        setOutput(prev => prev + '❌ ERRORS:\n');
+                        setOutput(prev => prev + stderr + '\n');
+                    }
+                }
+
+                if (result.compile_output) {
+                    const compileOutput = atob(result.compile_output).trim();
+                    if (compileOutput) {
+                        setOutput(prev => prev + '🔧 COMPILATION:\n');
+                        setOutput(prev => prev + compileOutput + '\n');
+                    }
+                }
+
+                // Show execution stats
+                setOutput(prev => prev + '\n📈 EXECUTION STATS:\n');
+                setOutput(prev => prev + `⏱️  Time: ${result.time || 'N/A'}s\n`);
+                setOutput(prev => prev + `💾 Memory: ${result.memory || 'N/A'} KB\n`);
+
+                setOutput(prev => prev + '\n🎉 Judge0 execution complete!\n');
+                break;
+            }
+
+            if (attempts >= maxAttempts) {
+                setOutput(prev => prev + '⏰ Execution timeout - please try again\n');
+            }
+
+        } catch (error) {
+            setOutput(prev => prev + `❌ Error: ${error.message}\n`);
+            if (error.response) {
+                setOutput(prev => prev + `📜 Status: ${error.response.status}\n`);
+                setOutput(prev => prev + `📜 Status Text: ${error.response.statusText}\n`);
+                setOutput(prev => prev + `📜 Response Data: ${JSON.stringify(error.response.data, null, 2)}\n`);
+            }
+        } finally {
+            setIsExecuting(false);
         }
-
-        await new Promise(resolve => setTimeout(resolve, 800));
-        setOutput(CODE_EXAMPLES[lang].output);
-        setIsExecuting(false);
     };
 
     const handleAISuggestion = (suggestion) => {
@@ -5089,20 +5267,9 @@ export default function App() {
         <div style={{
             minHeight: '100vh',
             background: `
-                radial-gradient(circle at 20% 30%, rgba(16, 185, 129, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(20, 120, 80, 0.12) 0%, transparent 45%),
-                radial-gradient(circle at 40% 80%, rgba(34, 197, 94, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 60% 20%, rgba(5, 150, 105, 0.08) 0%, transparent 35%),
-                linear-gradient(135deg, 
-                    #f0fdf4 0%, 
-                    #dcfce7 15%,
-                    #bbf7d0 30%,
-                    #86efac 45%,
-                    #6ee7b7 60%,
-                    #34d399 75%,
-                    #10b981 90%,
-                    #059669 100%
-                )
+                radial-gradient(circle at 20% 20%, rgba(248,250,252,0.8) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(241,245,249,0.6) 0%, transparent 50%),
+                linear-gradient(135deg, #fefefe 0%, #fafafa 25%, #f8fafc 50%, #f1f5f9 75%, #fafafa 100%)
             `,
             fontFamily: "'Inter', system-ui, sans-serif",
             position: 'relative',
@@ -5139,13 +5306,30 @@ export default function App() {
                             <div style={{ flex: '0 0 auto' }}>
                                 <h1 style={{
                                     margin: 0,
-                                    marginBottom: '10px',
-                                    fontSize: '36px',
-                                    letterSpacing: '0.1em'
+                                    marginBottom: '4px',
+                                    fontSize: '48px',
+                                    fontWeight: 900,
+                                    letterSpacing: '0.06em',
+                                    fontFamily: "'Orbitron', 'Audiowide', sans-serif",
+                                    background: 'linear-gradient(180deg, #f4f4f5 0%, #c7c9cc 40%, #9ca3af 100%)',
+                                    WebkitBackgroundClip: 'text',
+                                    WebkitTextFillColor: 'transparent',
+                                    textShadow: `0 1px 0 #ffffff,
+                                                0 2px 0 #d8dadd,
+                                                0 3px 0 #b0b3b8,
+                                                0 4px 0 #8b8f96,
+                                                0 5px 10px rgba(0,0,0,0.35)`
                                 }}>
                                     CodePad
                                 </h1>
-                                <p style={{ margin: 0 }}>
+                                <p style={{
+                                    margin: 0,
+                                    fontSize: '12px',
+                                    fontWeight: 600,
+                                    letterSpacing: '0.12em',
+                                    color: 'rgba(55,65,81,0.85)',
+                                    textTransform: 'uppercase'
+                                }}>
                                     Professional Development Environment
                                 </p>
                             </div>
@@ -5205,17 +5389,62 @@ export default function App() {
 
                                 {/* Execute Code Button */}
                                 {editorMode === 'code' && (
-                                    <button
-                                        onClick={executeCode}
-                                        disabled={isExecuting}
-                                        className="leonardo-button"
-                                        style={{
-                                            opacity: isExecuting ? 0.6 : 1,
-                                            cursor: isExecuting ? 'not-allowed' : 'pointer'
-                                        }}
-                                    >
-                                        {isExecuting ? 'Executing…' : 'Execute Code'}
-                                    </button>
+                                    <>
+                                        <button
+                                            onClick={executeCode}
+                                            disabled={isExecuting}
+                                            className="leonardo-button"
+                                            style={{
+                                                opacity: isExecuting ? 0.6 : 1,
+                                                cursor: isExecuting ? 'not-allowed' : 'pointer'
+                                            }}
+                                        >
+                                            {isExecuting ? 'Executing…' : 'Execute Code'}
+                                        </button>
+
+                                        <button
+                                            onClick={async () => {
+                                                setIsExecuting(true);
+                                                setOutput('🧪 Testing Judge0 API...\n');
+                                                try {
+                                                    // Test with Python for ML using correct ID
+                                                    const pythonId = JUDGE0_LANGUAGE_IDS.python; // ID 25
+                                                    setOutput(prev => prev + `🐍 Using Python for ML ID: ${pythonId}\n`);
+
+                                                    const token = await submitCode("print('Hello, Judge0!')", pythonId);
+                                                    setOutput(prev => prev + `📝 Test submitted! Token: ${token}\n`);
+
+                                                    // Wait a bit then get result
+                                                    await new Promise(resolve => setTimeout(resolve, 2000));
+                                                    const result = await getSubmissionResult(token);
+
+                                                    if (result.stdout) {
+                                                        setOutput(prev => prev + '📤 Test OUTPUT:\n');
+                                                        setOutput(prev => prev + atob(result.stdout) + '\n');
+                                                        setOutput(prev => prev + '🎉 Full integration test successful!\n');
+                                                    } else {
+                                                        setOutput(prev => prev + `⏳ Status: ${result.status?.description || 'Processing'}\n`);
+                                                    }
+                                                } catch (testError) {
+                                                    setOutput(prev => prev + `❌ Test execution failed: ${testError.message}\n`);
+                                                    if (testError.response?.data) {
+                                                        setOutput(prev => prev + `📜 Error details: ${JSON.stringify(testError.response.data, null, 2)}\n`);
+                                                    }
+                                                }
+                                                setIsExecuting(false);
+                                            }}
+                                            disabled={isExecuting}
+                                            className="leonardo-button"
+                                            style={{
+                                                opacity: isExecuting ? 0.6 : 1,
+                                                cursor: isExecuting ? 'not-allowed' : 'pointer',
+                                                fontSize: '12px',
+                                                padding: '6px 12px'
+                                            }}
+                                        >
+                                            Test API
+                                        </button>
+                                    </>
                                 )}
 
                                 {/* Font Selector - Actual dropdown */}
